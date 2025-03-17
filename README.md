@@ -25,3 +25,6 @@ https://docs.python.org/3/library/collections.html
 https://docs.python.org/3/library/csv.html 
 https://scikit-learn.org/stable/
 https://numpy.org/
+
+### Link to Code Snippit:
+https://github.com/34y7715ycft8tg1nco8/Project-1/blob/main/MyModel.py

@@ -1,7 +1,13 @@
 # Meteorite Hotspots
-
-#### PEAS:
-My agent's performance measure will be meteorite detection, that is, to find fallen meteorites for the purpose of research and worldwide safely prediction by modeling and inferencing how frequent these meteorites will fall and be considered dangerous based on historical data. My agent will have a fully observable environment of planet earth, given geographical locations, a timeline, the masses of the meteorites, and more. My agent's actuators will be predictive outcomes on meteorite landings such as predicting the next meteor shower based on the given evidence(clustering data and finding patterns depending location -> lat, lon), predictive outcomes on specific meteorite landing locations(which depends on frequencies on a given location), and the predictive danger level of a meteorite(which depends on mass and frequencies), all which can be modeled in a probabilistic way using a Bayesian Network. Lastly, my agent will have sensors of gps(world map), time collection if needed, and meteorite mass measurement.
+### Abstract: 
+#### Performance measure:
+My agent's performance measure will be meteorite detection, that is, to find fallen meteorites for the purpose of research and worldwide safely prediction by modeling and inferencing how frequent these meteorites will fall and be considered dangerous based on historical data. 
+#### Environment: 
+My agent will have a fully observable environment of planet earth, given geographical locations, a timeline, the masses of the meteorites, and more. 
+#### Actuators:
+My agent's actuators will be predictive outcomes on meteorite landings such as predicting the next meteor shower based on the given evidence(clustering data and finding patterns depending location -> lat, lon), predictive outcomes on specific meteorite landing locations(which depends on frequencies on a given location), and the predictive danger level of a meteorite(which depends on mass and frequencies), all which can be modeled in a probabilistic way using a Bayesian Network. 
+#### Sensors:
+Lastly, my agent will have sensors of gps(world map), time collection if needed, and meteorite mass measurement.
 
 ### Agent Setup, Data Preprocessing, Training setup:
 Using the dataset I chose, the main variables my model will be utilizing the mass, location, and landings timeline of the metoerites. The reason why is because the goal on my model is to infer and predict the likelyhood of a meteor falling on a given location, as well as additionally infering they're danger level given their mass. 
@@ -17,15 +23,10 @@ Results: the lower the numerical results, the likelyhood decreases of a landing 
 My model can improve in various aspects. To start, the chosen dataset was not as accurate as I thought it would and therefore my model lacked a lot of extra variables that could have helped create a more accurate inference on the same goal. For example, the speeds of the meteorites (if recorded) could have been more useful in inferencing the danger level of the meteorite. Given the landing's regions of the metoerite could have made the inference more interesting for the user as they would not be limited to single cities now. The preprocessing function also needs some work becuase of the way the dataset was structured. It lacks some accuracy which can effect the performance of the DBSCAN algorithm. Lastly, better adjustments for the DBSCAN algorithm parameters as previously mentioned could have also improved the inference of the model based on what the user wanted to look for, and any kind of biases that they would have considered as well(like minimum cluster size). 
 
 
-### Additional Notes:
-AI tools like chatgpt helped me decide what structure model would best fit the dataset I was using and wanted to create inferences on. For example, I was stuck on HMM's and standard BN's but it helped me decide to go with the BN model. While I was going to use k-means algorithm at first, google AI tool brought the DBSCAN algorithm into my attention and after further research in sklearn's official website, I chose the DBSCAN algorithm.
 
-### Links for libraries:
+### Links to libraries:
 https://docs.python.org/3/library/collections.html
 https://docs.python.org/3/library/csv.html 
 https://scikit-learn.org/stable/
 https://numpy.org/
-
-### Link to Code Snippit:
-https://github.com/34y7715ycft8tg1nco8/Project-1/blob/main/MyModel.py
 

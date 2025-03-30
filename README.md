@@ -20,6 +20,8 @@ The variables start off with mass, location , and timeline evidence. These are t
 
 
 
+
+
 This model uses 4 different types of libraries for assistance. It uses csv to read and transform the csv dataset file into a 2D array for better implementation of python code. It uses numpy in case we need to transform any lists into array for numerical results(e.g input array for DBSCAN). It also uses the Counter algorithm from the collections library for easier use of counting occurrences of a certain item in a data structure. In this case, I used it to efficiency give the mass of the fallen meteorites with the most occurrences to uniformly predict the danger level of said meteorites, as well as for cluster counting.Lastly, from the sklearn library, specifically in the clustering module, I used the DBSCAN algorithm to utilize the preprocessed data of time and location to cluster/group metoerite landings and consider them as landing hotspots. I used this algorithm as my main structure of inference because like I previously stated, this type of dataset and inference requires pattern detection of the meteorite landings with locations/time uses as factors because the goal of the model is to predict these type of regional hotspots. I considered using a different algorithm from sklearn, that is, K-means(which I learned from cse 151a to be great for this type of data) but DBSCAN is more effective in removing single noise meteorite landings that would not be useful for our clusterings. The algorithm has the minimum considered sample size of a cluster of meteorite landings set to 2 but in future training, I want the user input to decide the sample size for a better and more accurate inference given what they want to know. Same with the eps value, it would largely depend on the accuracy of the given dataset.
 
 ### Conclusion:
@@ -34,4 +36,5 @@ https://docs.python.org/3/library/csv.html
 https://scikit-learn.org/stable/
 https://numpy.org/
 https://networkx.org/
+https://matplotlib.org/
 

@@ -31,7 +31,7 @@ My model can improve in various aspects. To start, the chosen dataset was not as
 
 
 ### Links to libraries:
-https://docs.python.org/3/library/collections.html
+https://docs.python.org/3/library/collections.html   
 https://docs.python.org/3/library/csv.html 
 https://scikit-learn.org/stable/
 https://numpy.org/

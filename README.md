@@ -14,6 +14,7 @@ Using the dataset I chose, the main variables my model will be utilizing the mas
 
 The variables start off with mass, location , and timeline evidence. These are the baseline evidence variables the model depends on to use in future computations. 
 
+
 The next variable uses evidence of time and location to model the meteorite landings as clusters(using a preprocessing function to filter out the data into only location and time (2D) and integers/floats for the DBSCAN algorithm). This is important for this type of model as we can use the history (time and location) of the metoerite landings to find patterns by clustering these landings based on their location and time and categorize them as metoerite hotspots.
 
 With this, we have now created a frequencies variable that can be used to estimate how often these meteorites will fall in groups of clusters over time (in the next upcoming years based timeline span) for a given location, that is, our first main computation and second to last variable that depends on the frequencies variable. Finally, we can have fun with the model and infer the danger level of the meteorites using basic probability theory(uniform distribution) that can tell the user how dangerous the meteorites can be based on frequency and mass(e.g "Global threat. Mass extinctions").   

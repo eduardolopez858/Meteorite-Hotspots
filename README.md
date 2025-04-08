@@ -13,7 +13,28 @@ Lastly, my agent will have sensors of gps(world map), time collection if needed,
 Using the dataset I chose, the main variables my model will be utilizing the mass, location, and landings timeline of the metoerites. The reason being the goal on my model is to infer and predict the likelyhood of a meteor falling on a given location, as well as additionally infering they're danger level given their mass. 
 
 The variables start off with mass, location , and timeline evidence. These are the baseline evidence variables the model depends on to use in future computations. 
-The mass variable is used as a seperate evidence function for future use while the location and timeline evidence variables will be preproccess for the main inference.
+The mass variable is used as a seperate evidence function that categorizes the masses of the meteorites (using Nasa classifications) that will be used for future use. 
+```
+ def mass_evidence(self, meteor):
+        try:
+            mass_kg = int(float(meteor[4]))
+            if mass_kg <= 1:
+                return 'Harmless. Most likely burn up in the atmosphere'
+            if mass_kg > 1 and mass_kg <= 10:
+                return 'Some property damage'
+            if mass_kg > 10 and mass_kg <= 100:
+                return "More localized damage, may cause injuries"
+            if mass_kg > 100 and mass_kg <= 10000:
+                return "Huge shockwave. May destory buildings"
+            if mass_kg > 10000 and mass_kg <= 1000000:
+                return "Regional threat. May destory entire cities and even cause tsunamis"
+            if mass_kg > 1000000:
+                return "Global threat. Mass extinctions"
+        except (ValueError, IndexError, TypeError):
+            return 'None'
+```
+
+On the other hand, the location and timeline evidence variables will be preproccessed for the main computation of the model.
 
 ```
 def preprocess(meteor_data):
@@ -33,14 +54,12 @@ def preprocess(meteor_data):
                 continue 
         return np.array(clust_data)
 ```
+The reason why we need preproccess only these two evidence variables is because the next variable uses time and location to model the meteorite landings as clusters, that is, preprocessing to filter out the data into only location and time (2D) representation of the clusters and to also convert the location names of the meteorites and represent them as integers for the DBSCAN algorithm. 
 
 
 
 
-
-
-
-The next variable uses evidence of time and location to model the meteorite landings as clusters(using a preprocessing function to filter out the data into only location and time (2D) and integers/floats for the DBSCAN algorithm). This is important for this type of model as we can use the history (time and location) of the metoerite landings to find patterns by clustering these landings based on their location and time and categorize them as metoerite hotspots.
+This is important for this type of model as we can use the history (time and location) of the metoerite landings to find patterns by clustering these landings based on their location and time and categorize them as metoerite hotspots.
 
 With this, we have now created a frequencies variable that can be used to estimate how often these meteorites will fall in groups of clusters over time (in the next upcoming years based timeline span) for a given location, that is, our first main computation and second to last variable that depends on the frequencies variable. Finally, we can have fun with the model and infer the danger level of the meteorites using basic probability theory(uniform distribution) that can tell the user how dangerous the meteorites can be based on frequency and mass(e.g "Global threat. Mass extinctions").   
 

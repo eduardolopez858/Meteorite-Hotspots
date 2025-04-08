@@ -12,7 +12,7 @@ Lastly, my agent will have sensors of gps(world map), time collection if needed,
 #### My agent's setup:
 Using the dataset I chose, the main variables my model will be utilizing the mass, location, and landings timeline of the metoerites. The reason being the goal on my model is to infer and predict the likelyhood of a meteor falling on a given location, as well as additionally infering they're danger level given their mass. 
 
-The variables start off with mass, location , and timeline evidence. These are the baseline evidence variables the model depends on to use in future computations. 
+The variables start off with mass, location , and timeline evidence. These are the baseline evidence variables the model depends on for future computations. 
 The mass variable is used as a seperate evidence function that categorizes the masses of the meteorites (using Nasa classifications) that will be used for future use. 
 ```
  def mass_evidence(self, meteor):

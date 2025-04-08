@@ -13,6 +13,31 @@ Lastly, my agent will have sensors of gps(world map), time collection if needed,
 Using the dataset I chose, the main variables my model will be utilizing the mass, location, and landings timeline of the metoerites. The reason being the goal on my model is to infer and predict the likelyhood of a meteor falling on a given location, as well as additionally infering they're danger level given their mass. 
 
 The variables start off with mass, location , and timeline evidence. These are the baseline evidence variables the model depends on to use in future computations. 
+The mass variable is used as a seperate evidence function for future use while the location and timeline evidence variables will be preproccess for the main inference.
+
+'''
+def preprocess(meteor_data):
+        clust_data = [] # 2d data for time and location
+        for meteor in meteor_data:
+            try:
+                if "(" in meteor[9] and "," in meteor[9]:
+                    lat, lon = meteor[9].strip("()").split(",")
+                    lat = float(lat.strip())  
+                    lon = float(lon.strip())
+                else:
+                    lat = float(meteor[8])  
+                    lon = float(meteor[9])  
+                year = int(meteor[6])  
+                clust_data.append([lat, lon, year])
+            except (ValueError, IndexError):
+                continue 
+        return np.array(clust_data)
+'''
+
+
+
+
+
 
 
 The next variable uses evidence of time and location to model the meteorite landings as clusters(using a preprocessing function to filter out the data into only location and time (2D) and integers/floats for the DBSCAN algorithm). This is important for this type of model as we can use the history (time and location) of the metoerite landings to find patterns by clustering these landings based on their location and time and categorize them as metoerite hotspots.

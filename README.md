@@ -15,7 +15,7 @@ Using the dataset I chose, the main variables my model will be utilizing the mas
 The variables start off with mass, location , and timeline evidence. These are the baseline evidence variables the model depends on to use in future computations. 
 The mass variable is used as a seperate evidence function for future use while the location and timeline evidence variables will be preproccess for the main inference.
 
-'''
+```
 def preprocess(meteor_data):
         clust_data = [] # 2d data for time and location
         for meteor in meteor_data:
@@ -32,7 +32,7 @@ def preprocess(meteor_data):
             except (ValueError, IndexError):
                 continue 
         return np.array(clust_data)
-'''
+```
 
 
 

@@ -51,7 +51,7 @@ def preprocess(meteor_data):
 ```
 The reason why we need preproccess only these two variables is because the next variable (frequencies) uses time and location to model the meteorite landings as clusters, that is, transforming the data into only location and time numerical features for the DBSCAN algorithm. It's important for this model as we can use the time and location variables of the metoerite landings to find patterns by clustering these landings based on their location and time and categorize them as metoerite hotspots. 
 
-### Model visualization coming soon*
+model visualization coming soon*
 
 ```
 def frequencies(self):
@@ -126,7 +126,7 @@ def user_interface():
 ```
 
 
-Model Structure:
+## Model Structure:   
 <img width="792" alt="Image" src="https://github.com/user-attachments/assets/0440e161-712c-4424-a152-724c9a60ab84" />   
  
 #### Library sources:

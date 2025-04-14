@@ -1,5 +1,5 @@
 # Meteorite Hotspots
-### Abstract: 
+## Abstract: 
 #### Performance measure:
 My agent's performance measure will be meteorite detection, that is, to find fallen meteorites for the purpose of research and worldwide safely prediction by modeling and inferencing how frequent these meteorites will fall and be considered dangerous based on historical data. 
 #### Environment: 
@@ -9,7 +9,7 @@ My agent's actuators will be predictive outcomes on meteorite landings such as p
 #### Sensors:
 Lastly, my agent will have sensors of gps(world map), time collection if needed, and meteorite mass measurement.
 
-#### My agent's setup:
+## My agent's setup:
 Using the dataset I chose, the main variables my model will be utilizing the mass, location, and landings timeline of the metoerites. The reason being the goal on my model is to infer and predict the likelyhood of a meteor falling on a given location, as well as additionally infering they're danger level given their mass. 
 
 The variables start off with mass, location , and timeline evidence. These are the baseline evidence variables the model depends on for future computations.

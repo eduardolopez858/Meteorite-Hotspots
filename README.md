@@ -129,7 +129,7 @@ def user_interface():
 ## Model Structure:   
 <img width="792" alt="Image" src="https://github.com/user-attachments/assets/0440e161-712c-4424-a152-724c9a60ab84" />   
  
-#### Library sources:
+## Library sources:
 https://docs.python.org/3/library/collections.html   
 https://docs.python.org/3/library/csv.html   
 https://scikit-learn.org/stable/   

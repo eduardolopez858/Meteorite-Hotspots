@@ -9,8 +9,8 @@ Using the chosen dataset, the main variables my model will be utilizing the mass
 The variables start off with mass, location , and timeline evidence. These are the baseline evidence variables the model depends on for future computations.
 
 The evidence variable is represented as a function that classifies the masses of the meteorites (using Nasa classifications) that will be used in future computations in the model (e.g danger level).
-```
- def mass_evidence(self, meteor):
+```ruby
+ def mass(self, meteor):
         try:
             mass_kg = int(float(meteor[4]))
             if mass_kg <= 1:
@@ -31,7 +31,7 @@ The evidence variable is represented as a function that classifies the masses of
 
 On the other hand, the location and timeline evidence variables will need to be preproccessed for the main computation of the model.
 
-```
+```ruby
 def preprocess(meteor_data):
         clust_data = [] # 2d data for time and location
         for meteor in meteor_data:
@@ -53,7 +53,7 @@ The reason why we need preproccess only these two variables is because the next 
 
 model visualization coming soon*
 
-```
+```ruby
 def frequencies(self):
         data = self.preprocess()
         if data.size == 0:
@@ -68,9 +68,9 @@ def frequencies(self):
 ```
 
 With this, we have now created a frequencies variable that can now be used to infer the likleyhood of a meteorite landing on given location.
-```
+
+```ruby
 def likelyhood_given_city(self,city):
-        # collecting frequencies of given city
         cluster_counts, data_with_clusters = self.frequencies()
         if not cluster_counts or data_with_clusters.size == 0:
             return 'None'
@@ -98,7 +98,7 @@ def likelyhood_given_city(self,city):
 
 Finally, we can have fun with the model and infer the danger level of the meteorites using uniform distribution that can tell the user the danger level of the meteorite based on frequency and mass(e.g "Global threat. Mass extinctions"). 
 
-```
+```ruby
 def likelyhood_danger_given_city_mass(self,city):
         mass_data = []
         for meteor in self.meteor_data:
@@ -113,7 +113,7 @@ def likelyhood_danger_given_city_mass(self,city):
 ```
 For testing purposes, I have created a temporary user interface. Front end user interface is still under development.
 
-```
+```ruby
 def user_interface():
     #input
     city_input = input("Enter city you would like to make an inference on: ")
@@ -124,7 +124,6 @@ def user_interface():
     print("There will be:", prediction_for_city, "meteor landings in", city_input)
     print("Specs:", danger_level)
 ```
-
 
 ## Model Structure:   
 <img width="792" alt="Image" src="https://github.com/user-attachments/assets/0440e161-712c-4424-a152-724c9a60ab84" />   

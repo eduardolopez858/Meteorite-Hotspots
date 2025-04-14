@@ -1,13 +1,7 @@
 # Meteorite Hotspots
 ## Abstract: 
-#### Performance measure:
-My agent's performance measure will be meteorite detection, that is, to find fallen meteorites for the purpose of research and worldwide safely prediction by modeling and inferencing how frequent these meteorites will fall and be considered dangerous based on historical data. 
-#### Environment: 
-My agent will have a fully observable environment of planet earth, given geographical locations, a timeline, the masses of the meteorites, and more. 
-#### Actuators:
-My agent's actuators will be predictive outcomes on meteorite landings such as predicting the next meteor shower based on the given evidence(clustering data and finding patterns depending location -> lat, lon), predictive outcomes on specific meteorite landing locations(which depends on frequencies on a given location), and the predictive danger level of a meteorite(which depends on mass and frequencies), all which can be modeled in a probabilistic way using a Bayesian Network. 
-#### Sensors:
-Lastly, my agent will have sensors of gps(world map), time collection if needed, and meteorite mass measurement.
+#### Using PEAS (Performance measure, Environment, Actuators, Sensors)
+My agent's performance measure will be meteorite detection, that is, to find fallen meteorites for the purpose of research and worldwide safely prediction by modeling and inferencing how frequent these meteorites will fall and be considered dangerous based on historical data. My agent will have a fully observable environment of planet earth, given geographical locations, a timeline, the masses of the meteorites, and more. My agent's actuators will be predictive outcomes on meteorite landings such as predicting the next meteor shower based on the given evidence(clustering data and finding patterns depending location -> lat, lon), predictive outcomes on specific meteorite landing locations(which depends on frequencies on a given location), and the predictive danger level of a meteorite(which depends on mass and frequencies), all which can be modeled in a probabilistic way using a Bayesian Network. Lastly, my agent will have sensors of gps(world map), time collection if needed, and meteorite mass measurement.
 
 ## My agent's setup:
 Using the dataset I chose, the main variables my model will be utilizing the mass, location, and landings timeline of the metoerites. The reason being the goal on my model is to infer and predict the likelyhood of a meteor falling on a given location, as well as additionally infering they're danger level given their mass. 

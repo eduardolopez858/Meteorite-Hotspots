@@ -56,12 +56,7 @@ def pre(meteor_data):
 ```
 We only need preproccess these two variables (cities and time) because the next variable of the model (frequencies) uses them to classify the meteorite landings as clusters, that is, transforming the data into only location and time numerical features for the DBSCAN algorithm. It's important for this model as we can use the time and location variables of the metoerite landings to find patterns by clustering these landings based on their location and time and categorize them as metoerite hotspots. Although, before we do that, we need to first use the preprocessing function above, giving us the following scattar plot:
 ![](https://github.com/eduardolopez858/Meteorite-Hotspots/blob/main/Model1.png) 
-
-
-
-
-
-model visualization coming soon*
+Now, we need to change the city names into numerical values for the DBSCAN algorithm. 
 
 ```ruby
 def frequencies(self):

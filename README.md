@@ -4,11 +4,11 @@
 My agent's performance measure will be meteorite detection, that is, to find fallen meteorites for the purpose of research and worldwide safely prediction by modeling and inferencing how frequent these meteorites will fall and be considered dangerous based on historical data. My agent will have a fully observable environment of planet earth, given geographical locations, a timeline, the masses of the meteorites, and more. My agent's actuators will be predictive outcomes on meteorite landings such as predicting the next meteor shower based on the given evidence(clustering data and finding patterns depending location -> lat, lon), predictive outcomes on specific meteorite landing locations(which depends on frequencies on a given location), and the predictive danger level of a meteorite(which depends on mass and frequencies), all which can be modeled in a probabilistic way using a Bayesian Network. Lastly, my agent will have sensors of gps(world map), time collection if needed, and meteorite mass measurement.
 
 ## My agent's setup
-Using the chosen dataset, the main variables my model will be utilizing the mass, location, and landings timeline of the metoerites. The reason being the goal on my model is to infer and predict the likelyhood of a meteor falling on a given location, as well as additionally infering they're danger level given their mass. 
+Using the chosen dataset, the main variables my model will be utilizing the mass, location, and landings timeline of the metoerites. The reason being my model's purpose is to infer and predict the likelyhood of a meteorite falling on a given location, as well as additionally infering they're danger level, that is when given their mass. 
 
 The variables start off with mass, location , and timeline evidence. These are the baseline evidence variables the model depends on for future computations.
 
-The evidence variable is represented as a function that classifies the masses of the meteorites (using Nasa classifications) that will be used in future computations in the model (e.g danger level).
+The mass variable is represented as a function that classifies the masses of the meteorites (using Nasa classifications) that will be used in future computations.
 ```ruby
  def mass(self, meteor):
         try:
@@ -32,24 +32,35 @@ The evidence variable is represented as a function that classifies the masses of
 On the other hand, the location and timeline evidence variables will need to be preproccessed for the main computation of the model.
 
 ```ruby
-def preprocess(meteor_data):
-        clust_data = [] # 2d data for time and location
-        for meteor in meteor_data:
-            try:
-                if "(" in meteor[9] and "," in meteor[9]:
-                    lat, lon = meteor[9].strip("()").split(",")
-                    lat = float(lat.strip())  
-                    lon = float(lon.strip())
-                else:
-                    lat = float(meteor[8])  
-                    lon = float(meteor[9])  
-                year = int(meteor[6])  
-                clust_data.append([lat, lon, year])
-            except (ValueError, IndexError):
-                continue 
-        return np.array(clust_data)
+def pre(meteor_data):
+    # columns 0 and 6 are the only relevant in this computation
+    extraction = [0,6]
+    clust_data = [[meteor[i] for i in extraction] for meteor in meteor_data]
+    clust_data = clust_data[1:]
+
+    # converting dataset into a clean NumPy array
+    arrayPre = np.array(clust_data)
+    cleaned_array = np.array([row for row in arrayPre if row[1].strip() != ''])
+
+    # displaying relevant dataset
+    years = cleaned_array[:, 1].astype(float)
+    cities = cleaned_array[:, 0]
+    plt.figure(figsize=(8, 8))
+    plt.scatter(years, cities, s=1)
+    x_min = years.min()
+    x_max = years.max()
+    plt.ylabel("Cities")
+    plt.xlabel(f"Years {int(x_min)} - {int(x_max)}")
+    plt.yticks([])
+    plt.show()  
 ```
-The reason why we need preproccess only these two variables is because the next variable (frequencies) uses time and location to model the meteorite landings as clusters, that is, transforming the data into only location and time numerical features for the DBSCAN algorithm. It's important for this model as we can use the time and location variables of the metoerite landings to find patterns by clustering these landings based on their location and time and categorize them as metoerite hotspots. 
+We only need preproccess these two variables (cities and time) because the next variable of the model (frequencies) uses them to classify the meteorite landings as clusters, that is, transforming the data into only location and time numerical features for the DBSCAN algorithm. It's important for this model as we can use the time and location variables of the metoerite landings to find patterns by clustering these landings based on their location and time and categorize them as metoerite hotspots. Although, before we do that, we need to first use the preprocessing function above, giving us the following scattar plot:
+
+<img width="792" alt="Image" src= />   
+
+
+
+
 
 model visualization coming soon*
 

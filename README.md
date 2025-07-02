@@ -52,7 +52,8 @@ def pre(meteor_data):
     plt.ylabel("Cities")
     plt.xlabel(f"Years {int(x_min)} - {int(x_max)}")
     plt.yticks([])
-    plt.show()  
+    plt.show()
+    return cleaned_array
 ```
 We only need preproccess these two variables (cities and time) because the next variable of the model (frequencies) uses them to classify the meteorite landings as clusters, that is, transforming the data into only location and time numerical features for the DBSCAN algorithm. It's important for this model as we can use the time and location variables of the metoerite landings to find patterns by clustering these landings based on their location and time and categorize them as metoerite hotspots. Although, before we do that, we need to first use the preprocessing function above, giving us the following scattar plot:
 ![](https://github.com/eduardolopez858/Meteorite-Hotspots/blob/main/Model1.png) 

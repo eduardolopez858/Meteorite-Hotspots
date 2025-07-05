@@ -32,16 +32,22 @@ The mass variable is represented as a function that classifies the masses of the
 On the other hand, the location and timeline evidence variables will need to be preproccessed for the main computation of the model.
 
 ```ruby
+# preproccessing data
 def pre(meteor_data):
     # columns 0 and 6 are the only relevant in this computation
     extraction = [0,6]
     clust_data = [[meteor[i] for i in extraction] for meteor in meteor_data]
     clust_data = clust_data[1:]
-
+    # converting cities into numerical values
+    num = 0
+    memo = []
+    for meteor in clust_data:
+        if num not in memo:
+            meteor[0] = num
+            num += 1
     # converting dataset into a clean NumPy array
     arrayPre = np.array(clust_data)
     cleaned_array = np.array([row for row in arrayPre if row[1].strip() != ''])
-
     # displaying relevant dataset
     years = cleaned_array[:, 1].astype(float)
     cities = cleaned_array[:, 0]
@@ -55,9 +61,8 @@ def pre(meteor_data):
     plt.show()
     return cleaned_array
 ```
-We only need preproccess the two variables (location and time) because the next variable of the model (frequencies) uses them to classify the meteorite landings as clusters, that is, transforming the data into only location and time numerical features for the DBSCAN algorithm. It's important for this model as we can use the time and location variables of the metoerite landings to find patterns by clustering these landings based on their location and time and categorize them as metoerite hotspots. Although, before we do that, we need to first use the preprocessing function above, giving us the following scattar plot:
+We only need preproccess the two variables (location and time) because the next variable of the model (frequencies) uses them to classify the meteorite landings as clusters, that is, transforming the data into only location and time numerical features for the DBSCAN algorithm. It's important for this model as we can use the time and location variables of the meteorite landings to find patterns by clustering these landings based on their location and time and categorize them as metoerite hotspots. This gives us the following scattar plot:
 ![](https://github.com/eduardolopez858/Meteorite-Hotspots/blob/main/Model1.png) 
-Now, we need to change the city names into numerical values for the DBSCAN algorithm. 
 
 ```ruby
 def frequencies(self):

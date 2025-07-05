@@ -33,7 +33,7 @@ On the other hand, the location and timeline evidence variables will need to be 
 
 ```ruby
 # preproccessing data
-def pre(meteor_data):
+def pre(self, meteor_data):
     # columns 0 and 6 are the only relevant in this computation
     extraction = [0,6]
     clust_data = [[meteor[i] for i in extraction] for meteor in meteor_data]

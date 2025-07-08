@@ -136,7 +136,7 @@ def user_interface():
     print("Specs:", danger_level)
 ```
 
-## Model Structure:   
+## Agent Structure:   
 ![](https://github.com/eduardolopez858/Meteorite-Hotspots/blob/main/Agent.png)
  
 ## Library sources:

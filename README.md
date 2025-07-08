@@ -137,7 +137,7 @@ def user_interface():
 ```
 
 ## Model Structure:   
-![](https://github.com/eduardolopez858/Meteorite-Hotspots/blob/main/TotalModel.png)
+![](https://github.com/eduardolopez858/Meteorite-Hotspots/blob/main/Agent.png)
  
 ## Library sources:
 https://docs.python.org/3/library/collections.html   

@@ -1,67 +1,54 @@
 # Meteorite Hotspots
 ## Abstract
 #### Using PEAS (Performance measure, Environment, Actuators, Sensors)
-My agent's performance measure will be meteorite detection, that is, to find fallen meteorites for the purpose of research and worldwide safely prediction by modeling and inferencing how frequent these meteorites will fall and be considered dangerous based on historical data. My agent will have a fully observable environment of planet earth, given geographical locations, a timeline, the masses of the meteorites, and more. My agent's actuators will be predictive outcomes on meteorite landings such as predicting the next meteor shower based on the given evidence(clustering data and finding patterns depending location -> lat, lon), predictive outcomes on specific meteorite landing locations(which depends on frequencies on a given location), and the predictive danger level of a meteorite(which depends on mass and frequencies), all which can be modeled in a probabilistic way using a Bayesian Network. Lastly, my agent will have sensors of gps(world map), time collection if needed, and meteorite mass measurement.
+My agent's performance measure will be meteorite landing inference for the purpose of research and worldwide safely prediction by modeling how frequent these meteorites will fall and be considered dangerous based on a historical dataset. My agent will have an observable environment of planet earth, given geographical locations, a timeline, the masses of the meteorites, and more. My agent's actuators will be a predictive outcomes on meteorite landings such as predicting a meteor landing based on the given evidence(clustering data and finding patterns depending on location) and the danger level of a meteorite(which depends on mass and frequencies), all which can be modeled in a probabilistic way using a general pipeline of methods. Lastly, my agent will have sensors of gps (world map), time collection, and meteorite mass measurement.
 
 ## My agent's setup
-Using the chosen dataset, the main variables my model will be utilizing the mass, location, and landings timeline of the metoerites. The reason being my model's purpose is to infer and predict the likelyhood of a meteorite falling on a given location, as well as additionally infering they're danger level, that is when given their mass. 
+Using the chosen dataset, the main features my model will be utilizing is mass, location, and landings timeline of the metoerites since the purpose is to infer and predict the likelyhood of a meteorite landing on a given location, as well as additionally infering they're danger level, that is when given their mass. 
 
-The variables start off with mass, location , and timeline evidence. These are the baseline evidence variables the model depends on for future computations.
+The pipeline starts with with mass, location , and timeline evidence preprocessed and extracted from the dataset. These are the baseline evidence methods the model depends on for future computations.
 
-The mass variable is represented as a function that classifies the masses of the meteorites (using Nasa classifications) that will be used in future computations.
+Below is the mass method used to extract the feature from the dataset that will be used in future computations (danger method).
 ```ruby
- def mass(self, meteor):
-        try:
-            mass_kg = int(float(meteor[4]))
-            if mass_kg <= 1:
-                return 'Harmless. Most likely burn up in the atmosphere'
-            if mass_kg > 1 and mass_kg <= 10:
-                return 'Some property damage'
-            if mass_kg > 10 and mass_kg <= 100:
-                return "More localized damage, may cause injuries"
-            if mass_kg > 100 and mass_kg <= 10000:
-                return "Huge shockwave. May destory buildings"
-            if mass_kg > 10000 and mass_kg <= 1000000:
-                return "Regional threat. May destory entire cities and even cause tsunamis"
-            if mass_kg > 1000000:
-                return "Global threat. Mass extinctions"
-        except (ValueError, IndexError, TypeError):
-            return 'None'
+ # Mass evidence
+    def mass_evidence(self, data):
+        # relevant column for mass classifications
+        extraction = [4]
+        # skipping header
+        data = [[meteor[i] for i in extraction] for meteor in data[1:]]
+        # conversion to np array and removing imputies
+        data = np.array([row for row in data if row[0].strip() != ''])
+        data = data.astype(float)
+        return data
 ```
 
-On the other hand, the location and timeline evidence variables will need to be preproccessed for the main computation of the model.
+On the other hand, the agent also requires a location and timeline method that will preproccess the required features for the clustering algorithm to classify and detect meteorite landing hotspots for the frequencies method of the pipeline.
 
 ```ruby
-# preproccessing data
-def pre(self, meteor_data):
-    # columns 0 and 6 are the only relevant in this computation
-    extraction = [0,6]
-    clust_data = [[meteor[i] for i in extraction] for meteor in meteor_data]
-    clust_data = clust_data[1:]
-    # converting cities into numerical values
-    num = 0
-    memo = []
-    for meteor in clust_data:
-        if num not in memo:
-            meteor[0] = num
-            num += 1
-    # converting dataset into a clean NumPy array
-    arrayPre = np.array(clust_data)
-    cleaned_array = np.array([row for row in arrayPre if row[1].strip() != ''])
-    # displaying relevant dataset
-    years = cleaned_array[:, 1].astype(float)
-    cities = cleaned_array[:, 0]
-    plt.figure(figsize=(8, 8))
-    plt.scatter(years, cities, s=1)
-    x_min = years.min()
-    x_max = years.max()
-    plt.ylabel("Cities")
-    plt.xlabel(f"Years {int(x_min)} - {int(x_max)}")
-    plt.yticks([])
-    plt.show()
-    return cleaned_array
+# Time and Location evidence
+    def time_location_evidence(self, data):
+        # relevant columns for multi-feature clustering (year and coordinate evidence)
+        extraction = [6, 7, 8]
+        # skipping header
+        data = [[meteor[i] for i in extraction] for meteor in data[1:]]
+        # conversion to np array and removing imputies
+        data = np.array([row for row in data if row[0].strip() != '' and row[1].strip() != '' and row[2].strip() != '']).astype(float)
+        return data
 ```
-We only need preproccess the two variables (location and time) because the next variable of the model (frequencies) uses them to classify the meteorite landings as clusters, that is, transforming the data into only location and time numerical features for the DBSCAN algorithm. It's important for this model as we can use the time and location variables of the meteorite landings to find patterns by clustering these landings based on their location and time and categorize them as metoerite hotspots. This gives us the following scattar plot:
+This method gives is the following 3 dimensional dataset to work with:
+
+
+
+
+
+
+
+
+
+
+
+
+The agent needs preproccess the mass, lat, and lon features of the dataset (location and time) because the next method of the model (frequencies) uses them to classify the meteorite landings as clusters, that is, transforming the data into only location and time numerical features for the DBSCAN algorithm. It's important for this model as we can use the time and location variables of the meteorite landings to find patterns by clustering these landings based on their location and time and categorize them as metoerite hotspots. This gives us the following scattar plot:
 ![](https://github.com/eduardolopez858/Meteorite-Hotspots/blob/main/Model1.2.png) 
 
 ```ruby
@@ -137,7 +124,7 @@ def user_interface():
 ```
 
 ## Agent Structure:   
-![](https://github.com/eduardolopez858/Meteorite-Hotspots/blob/main/Agent.png)
+
  
 ## Library sources:
 https://docs.python.org/3/library/collections.html   

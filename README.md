@@ -7,7 +7,7 @@ My agent's performance measure will be meteorite landing inference for the purpo
 Using the chosen dataset, the main features my model will be utilizing is mass, location, and landings timeline of the metoerites since the purpose is to infer and predict the likelyhood of a meteorite landing on a given location, as well as additionally infering they're danger level, that is when given their mass. 
 
 Here's the pipeline of methods in which the model is structured by:
-![](pipeline1.png)
+![](pipeline2.png)
 
 The pipeline starts with with mass, location , and timeline evidence preprocessed and extracted from the dataset. These are the baseline evidence methods the model depends on for future computations.
 
@@ -156,7 +156,7 @@ print(final1)
 
 ## Resources: 
 ### DBSCAN:
-https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html
+https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html 
 https://www.dbs.ifi.lmu.de/Publikationen/Papers/KDD-96.final.frame.pdf
 ### Helper Libraries:
 https://scikit-learn.org/stable/modules/preprocessing.html
@@ -166,5 +166,5 @@ https://matplotlib.org/
 ### Full Code Script:
 https://github.com/eduardolopez858/Meteorite-Hotspots/blob/main/model1.py
 ### Nasa Meteorite Dataset:
-https://github.com/eduardolopez858/Meteorite-Hotspots/blob/main/meteorite-landings.csv
+https://github.com/eduardolopez858/Meteorite-Hotspots/blob/main/meteorite-landings.csv 
 https://www.kaggle.com/datasets/nasa/meteorite-landings

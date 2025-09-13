@@ -38,26 +38,36 @@ On the other hand, the agent also requires a location and timeline method that w
         data = np.array([row for row in data if row[0].strip() != '' and row[1].strip() != '' and row[2].strip() != '']).astype(float)
         return data
 ```
-This method gives is the following 3 dimensional dataset to work with:
+This method gives is the following 3 dimensional dataset:
 ![](data1.png)
 
 After the preprocessing method has done its work and extracted the mass, lat, lon features of the dataset required for the meteorite hotspot detection, then the frequencies method will perform one of the main computations of the agent, essential for the inference later on the pipeline. The frequencies method utilizes an modern unsupervised clustering algorithm known as DBSCAN, Density Based Clustering with Applications with noise. After training and doing a baseline comparison with a centriod based clustering algorithm (k-means), it showed promising results in meteor hotspot detection and outperformed k-means by 10-fold due to the noisy instances and complex clusters of the dataset. The algorithms hyperparameters eps and min_samples were set to 0.3 and 10, tuned for perfect cluster assignment. Note, the algorithms results were interpreted visually since the dataset is only 3 dimensional.
 
 ```ruby
-def frequencies(self):
-        data = self.preprocess()
-        if data.size == 0:
-            return 'No valid clustering data'
-        dbscan = DBSCAN(eps=5, min_samples=2) 
-        clusters = dbscan.fit_predict(data[:, :2]) 
-        cluster_counts = Counter(clusters)
-        data_with_clusters = np.column_stack((data, clusters))
-        if -1 in cluster_counts:
-            del cluster_counts[-1]
-        return cluster_counts, data_with_clusters
+# Frequencies evidence
+    def frequencies(self, clean_data):
+        # scaling for proper clustering
+        scaler = StandardScaler()
+        scaled = scaler.fit_transform(clean_data)
+        # training model to 3D dataset
+        model = DBSCAN(eps=0.3, min_samples=10)
+        trained = model.fit(scaled)
+        labels = trained.labels_
+        return clean_data, labels
 ```
+This method gives us the following labeled 3 dimensional dataset:
+![](data2.png)
 
-With this, we have now created a frequencies variable that can now be used to infer the likleyhood of a meteorite landing on given location.
+
+
+
+
+
+
+
+
+
+
 
 ```ruby
 def likelyhood_given_city(self,city):

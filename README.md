@@ -25,7 +25,7 @@ Below is the mass method used to extract the feature from the dataset that will 
         return data
 ```
 
-On the other hand, the agent also requires a location and timeline method that will preproccess the required features for the clustering algorithm to classify and detect meteorite landing hotspots for the frequencies method of the pipeline.
+On the other hand, the agent also requires a location and timeline method that will preproccess the required features (mass, lat, lon) for the clustering algorithm to classify and detect meteorite landing hotspots for the frequencies method of the pipeline.
 
 ```ruby
 # Time and Location evidence
@@ -41,8 +41,7 @@ On the other hand, the agent also requires a location and timeline method that w
 This method gives is the following 3 dimensional dataset to work with:
 ![](data1.png)
 
-The agent needs preproccess the mass, lat, and lon features of the dataset (location and time) because the next method of the model (frequencies) uses them to classify the meteorite landings as clusters, that is, transforming the data into only location and time numerical features for the DBSCAN algorithm. It's important for this model as we can use the time and location variables of the meteorite landings to find patterns by clustering these landings based on their location and time and categorize them as metoerite hotspots. This gives us the following scattar plot:
-![](https://github.com/eduardolopez858/Meteorite-Hotspots/blob/main/Model1.2.png) 
+After the preprocessing method has done its work and extracted the mass, lat, lon features of the dataset required for the meteorite hotspot detection, then the frequencies method will perform one of the main computations of the agent, essential for the inference later on the pipeline. The frequencies method utilizes an modern unsupervised clustering algorithm known as DBSCAN, Density Based Clustering with Applications with noise. After training and doing a baseline comparison with a centriod based clustering algorithm (k-means), it showed promising results in meteor hotspot detection and outperformed k-means by 10-fold due to the noisy instances and complex clusters of the dataset. The algorithms hyperparameters eps and min_samples were set to 0.3 and 10, tuned for perfect cluster assignment. Note, the algorithms results were interpreted visually since the dataset is only 3 dimensional.
 
 ```ruby
 def frequencies(self):

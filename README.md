@@ -155,6 +155,16 @@ print(final1)
 ```
 
 ## Resources: 
-https://scikit-learn.org/stable/   
+# DBSCAN:
+https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html
+https://www.dbs.ifi.lmu.de/Publikationen/Papers/KDD-96.final.frame.pdf
+# Helper Libraries:
+https://scikit-learn.org/stable/modules/preprocessing.html
+https://docs.python.org/3/library/csv.html
 https://numpy.org/    
-https://matplotlib.org/   
+https://matplotlib.org/
+# Full Code Script:
+https://github.com/eduardolopez858/Meteorite-Hotspots/blob/main/model1.py
+# Nasa Meteorite Dataset:
+https://github.com/eduardolopez858/Meteorite-Hotspots/blob/main/meteorite-landings.csv
+https://www.kaggle.com/datasets/nasa/meteorite-landings

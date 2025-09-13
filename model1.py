@@ -6,7 +6,7 @@ import numpy as np
 import csv
 
 # transforming data
-path = "/Users/eduardolopez858/Downloads/Projects/Meteorite-Hotspots/meteorite-landings.csv"
+path = "some path to file"
 with open(path, mode="r", newline="") as file1:
     MeteorData = list(csv.reader(file1))
 

@@ -36,7 +36,7 @@ On the other hand, the agent also requires a location and timeline method that w
         return data
 ```
 This method gives is the following 3 dimensional dataset to work with:
-
+![](data1.png)
 
 
 

@@ -7,11 +7,7 @@ My agent's performance measure will be meteorite landing inference for the purpo
 Using the chosen dataset, the main features my model will be utilizing is mass, location, and landings timeline of the metoerites since the purpose is to infer and predict the likelyhood of a meteorite landing on a given location, as well as additionally infering they're danger level, that is when given their mass. 
 
 Here's the pipeline of methods in which the model is structured by:
-![]()
-
-
-
-
+![](pipeline1.png)
 
 The pipeline starts with with mass, location , and timeline evidence preprocessed and extracted from the dataset. These are the baseline evidence methods the model depends on for future computations.
 

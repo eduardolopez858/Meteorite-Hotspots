@@ -9,7 +9,7 @@ Using the chosen dataset, the main features my model will be utilizing is mass, 
 Here's the pipeline of methods in which the agent is structured by:
 ![](pipeline2.png)
 
-The pipeline starts with with mass, location , and timeline evidence preprocessed and extracted from the dataset. These are the baseline evidence methods the model depends on for future computations.
+The pipeline starts with with mass, location , and timeline evidence preprocessed and extracted from the dataset. These are the baseline evidence methods the agent depends on for future computations.
 
 Below is the mass method used to extract the feature from the dataset that will be used in future computations (danger method).
 ```ruby

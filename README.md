@@ -58,80 +58,103 @@ After the preprocessing method has done its work and extracted the mass, lat, lo
 This method gives us the following labeled 3 dimensional dataset:
 ![](data2.png)
 
-
-
-
-
-
-
-
-
-
-
+From here, the next method in the agents pipeline is a probablistic one that uses new user input (city location and year range) and the previous frequencies as evidence. Since DBSCAN can only perform hard assignment on each of the instances towards a cluster and the goal of the agent is to predict the likelihood of a new city instance_i (along with year) witnessing a meteor landing by soft assigning it to some pre-trained cluster_i, then the method will calculate such assignment using the density_i * weight_i of each cluster_i and collecting the highest, most probable assignment. The density of each cluster_i will be calculated using a SVM soft scoring kernel density estimator, specifically the Gaussian RBF kernel. This kernel allows for smooth and simple calculations (using euclidean distance, mean, variance, etc.) so that each cluster is assigneed a density, then using each of the clusters densities and their weights to get the highest likelihood that some instance_i belongs to a cluster_i in a probabilistic way beyond DBSCAN's capabilities. Keeping in mind the new instance x_i will be the location and year the user wants to make inference on.
 
 ```ruby
-def likelyhood_given_city(self,city):
-        cluster_counts, data_with_clusters = self.frequencies()
-        if not cluster_counts or data_with_clusters.size == 0:
-            return 'None'
-        city_cluster = None
-        for meteor in self.meteor_data:
-            if city.lower() in meteor[0].lower():
-                try:
-                    lat = float(meteor[8])
-                    lon = float(meteor[9])
-                    for point in data_with_clusters:
-                        if point[0] == lat and point[1] == lon:
-                            city_cluster = point[3]
-                            break
-                except (ValueError, IndexError):
-                    continue
-    
-        if city_cluster is None or city_cluster == -1:
-            return 0
-        total_landings = sum(cluster_counts.values())
-        city_landings = cluster_counts.get(city_cluster, 0)
-        if total_landings == 0:
-            return 0
-        return city_landings / total_landings
+# Pr(City | Freqs)
+    def city_given_freqs(self, x, data, labels):
+        # collecting cluster information for inference
+        clusters = {}
+        total_points = len(labels)
+        unique_labels = set(labels)
+        unique_labels.discard(-1)
+        for label in unique_labels:
+            clust_points = data[labels == label]
+            if len(clust_points) == 0:
+                continue
+            n = len(clust_points)
+            mu = clust_points.mean(axis=0)
+            sig = np.mean(np.linalg.norm(clust_points - mu, axis=1))
+            # avoid errors
+            if sig == 0 or np.isnan(sig):
+                continue
+            weight = n / total_points
+            # labeling with dict
+            clusters[label] = {
+                'points': clust_points,
+                'centroid': mu,
+                'sigma': sig,
+                'weight': weight
+            }
+        # ** Euclidean distance and Gaussian Radial Basis Function kernel**
+        probs = {}
+        for l, i in clusters.items():
+            mu = i['centroid']
+            sig = i['sigma']
+            weight = i['weight']
+            dist = np.sum((x - mu)**2)
+            density = np.exp(-dist / (2 * sig**2))
+            probs[l] = density * weight
+        # normalizing probabilities
+        total = sum(probs.values())
+        if total == 0:
+            return None, 0.0, []
+        probs = {l: p / total for l, p in probs.items()}
+        result_label = max(probs, key=probs.get)
+        result_prob = probs[result_label]
+        years = [int(p[0]) for p in clusters[result_label]['points']]
+        years_min = min(years)
+        years_max = max(years)
+        return x, result_label, labels, result_prob, data, years_min, years_max
 ```
 
-Finally, we can have fun with the model and infer the danger level of the meteorites using uniform distribution that can tell the user the danger level of the meteorite based on frequency and mass(e.g "Global threat. Mass extinctions"). 
+Finally, we can have more fun with the agent and infer the danger level of the user's new given location and year range by calculating the average of all the meteors masses of the soft assigned cluster.
 
 ```ruby
-def likelyhood_danger_given_city_mass(self,city):
-        mass_data = []
-        for meteor in self.meteor_data:
-            if city.lower() in meteor[0].lower():
-                mass_data.append(self.mass(meteor))
-            if not mass_data:
-                return 'None'
-        counts = Counter(mass_data)
-        highest_likelyhood_mass = max(counts, key=counts.get)
-        probability_mass = counts[highest_likelyhood_mass] / len(mass_data)
-        print("Most likely mass: ", highest_likelyhood_mass, " With likelihood: ", probability_mass)
+# danger level of the meteor
+    def danger_given_city_and_mass(self, x, result_prob, label, labels, mass_data, cluster_data, ystart, yend):
+        # collecting cluster point mass data
+        label_points = cluster_data[labels == label]
+        masses_label = [mass_data[p] for p in range(len(cluster_data))]
+        masses_average = sum(masses_label) / len(masses_label)
+        # categoritzing meteor masses
+        if masses_average < 100:
+            msg1 = "No Hazard -- Burns Up in Atmosphere"
+        elif masses_average > 100 and masses_average < 10000:
+            msg1 = "No Hazard -- Bright Fireball and Minor Atmospheric Explosion"
+        elif masses_average > 10000 and masses_average < 1000000:
+            msg1 = "Minor Risk -- Local Airburst and Possible Window Damage"
+        elif masses_average > 1000000 and masses_average < 100000000:
+            msg1 = "Local Risk -- Surface Explosion and Major Local damage"
+        elif masses_average > 100000000 and masses_average < 1000000000:
+            msg1 = "Regional Risk -- Crater Formation and Regional Distruction With Tsunami Potential"
+        elif masses_average > 1000000000:
+            msg1 = "Global Risk -- Absolute Annihilation and Mass Extinction"
+        # final inference
+        final_msg = "Location: ", x, "Probability: ", result_prob, "Mass Risk: ", msg1, "Years Range: ", ystart, "-", yend 
+        return final_msg
 ```
-For testing purposes, I have created a temporary user interface. Front end user interface is still under development.
-
+## Implementation:
 ```ruby
-def user_interface():
-    #input
-    city_input = input("Enter city you would like to make an inference on: ")
-    # inference
-    meteorite_bn = BN(MeteorData)
-    prediction_for_city = meteorite_bn.likelyhood_given_city(city_input)
-    danger_level = meteorite_bn.likelyhood_danger_given_city_mass(city_input)
-    print("There will be:", prediction_for_city, "meteor landings in", city_input)
-    print("Specs:", danger_level)
+# implementation
+Agent1 = Agent()
+# user city coordinates along with the year they want to infer
+x_new = np.array([2000, 35.00, 139.00])
+# pipeline
+mass_result = Agent1.mass_evidence(MeteorData)
+clean_result = Agent1.time_location_evidence(MeteorData)
+data1, labels_result = Agent1.frequencies(clean_result)
+point, lab, labs, prob, data2, ymin, ymax = Agent1.city_given_freqs(x_new, data1, labels_result)
+final1 = Agent1.danger_given_city_and_mass(point, prob, lab, labs, mass_result, data2, ymin, ymax)
+# printing final result
+print(final1)
+```
+## Output:
+```
+('Location: ', array([2000.,   35.,  139.]), 'Probability: ', np.float64(0.5130764707086648), 'Mass Risk: ', 'Minor Risk -- Local Airburst and Possible Window Damage', 'Years Range: ', 1875, '-', 2011)
 ```
 
-## Agent Structure:   
-
- 
-## Library sources:
-https://docs.python.org/3/library/collections.html   
-https://docs.python.org/3/library/csv.html   
+## Resources: 
 https://scikit-learn.org/stable/   
-https://numpy.org/   
-https://networkx.org/   
+https://numpy.org/    
 https://matplotlib.org/   

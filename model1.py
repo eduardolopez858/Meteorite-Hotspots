@@ -2,7 +2,6 @@
 import matplotlib.pyplot as plt
 from sklearn.cluster import DBSCAN
 from sklearn.preprocessing import StandardScaler
-from collections import Counter
 import numpy as np
 import csv
 

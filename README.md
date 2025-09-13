@@ -155,9 +155,8 @@ print(final1)
 ```
 
 ## Resources: 
-### DBSCAN:
+### DBSCAN Algorithm:
 https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html
-https://www.dbs.ifi.lmu.de/Publikationen/Papers/KDD-96.final.frame.pdf
 ### Helper Libraries:
 https://scikit-learn.org/stable/modules/preprocessing.html
 https://docs.python.org/3/library/csv.html

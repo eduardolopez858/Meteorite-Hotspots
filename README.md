@@ -55,7 +55,7 @@ After the preprocessing method has done it's work and extracted the mass, lat, a
         labels = trained.labels_
         return clean_data, labels
 ```
-This method gives us the following labeled 3 dimensional dataset:
+This method gives us the following 3 dimensional dataset (now labeled with clusters):
 ![](data2.png)
 
 From here, the next method in the agents pipeline is a probablistic one that uses new user input (city location and year range) and the previous frequencies as evidence. Since DBSCAN can only perform hard assignment on each of the instances towards a cluster and the goal of the agent is to predict the likelihood of a new city instance_i (along with year) witnessing a meteor landing by soft assigning it to some pre-trained cluster_i, then the method will calculate such assignment using the density_i * weight_i of each cluster_i and collecting the highest, most probable assignment. The density of each cluster_i will be calculated using a SVM soft scoring kernel density estimator, specifically the Gaussian RBF kernel. This kernel allows for smooth and simple calculations (using euclidean distance, mean, variance, etc.) so that each cluster is assigneed a density, then using each of the clusters densities and their weights to get the highest likelihood that some instance_i belongs to a cluster_i in a probabilistic way beyond DBSCAN's capabilities. Keeping in mind the new instance x_i will be the location and year the user wants to make inference on.

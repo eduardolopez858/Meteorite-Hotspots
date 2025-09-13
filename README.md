@@ -156,7 +156,7 @@ print(final1)
 
 ## Resources: 
 ### DBSCAN:
-https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html 
+https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html
 https://www.dbs.ifi.lmu.de/Publikationen/Papers/KDD-96.final.frame.pdf
 ### Helper Libraries:
 https://scikit-learn.org/stable/modules/preprocessing.html

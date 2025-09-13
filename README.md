@@ -38,7 +38,7 @@ On the other hand, the agent also requires a location and timeline method that w
         data = np.array([row for row in data if row[0].strip() != '' and row[1].strip() != '' and row[2].strip() != '']).astype(float)
         return data
 ```
-This method gives is the following 3 dimensional dataset:
+This method gives us the following 3 dimensional dataset:
 ![](data1.png)
 
 After the preprocessing method has done its work and extracted the mass, lat, lon features of the dataset required for the meteorite hotspot detection, then the frequencies method will perform one of the main computations of the agent, essential for the inference later on the pipeline. The frequencies method utilizes an modern unsupervised clustering algorithm known as DBSCAN, Density Based Clustering with Applications with noise. After training and doing a baseline comparison with a centriod based clustering algorithm (k-means), it showed promising results in meteor hotspot detection and outperformed k-means by 10-fold due to the noisy instances and complex clusters of the dataset. The algorithms hyperparameters eps and min_samples were set to 0.3 and 10, tuned for perfect cluster assignment. Note, the algorithms results were interpreted visually since the dataset is only 3 dimensional.

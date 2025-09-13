@@ -6,6 +6,13 @@ My agent's performance measure will be meteorite landing inference for the purpo
 ## My agent's setup
 Using the chosen dataset, the main features my model will be utilizing is mass, location, and landings timeline of the metoerites since the purpose is to infer and predict the likelyhood of a meteorite landing on a given location, as well as additionally infering they're danger level, that is when given their mass. 
 
+Here's the pipeline of methods in which the model is structured by:
+![]()
+
+
+
+
+
 The pipeline starts with with mass, location , and timeline evidence preprocessed and extracted from the dataset. These are the baseline evidence methods the model depends on for future computations.
 
 Below is the mass method used to extract the feature from the dataset that will be used in future computations (danger method).
@@ -37,16 +44,6 @@ On the other hand, the agent also requires a location and timeline method that w
 ```
 This method gives is the following 3 dimensional dataset to work with:
 ![](data1.png)
-
-
-
-
-
-
-
-
-
-
 
 The agent needs preproccess the mass, lat, and lon features of the dataset (location and time) because the next method of the model (frequencies) uses them to classify the meteorite landings as clusters, that is, transforming the data into only location and time numerical features for the DBSCAN algorithm. It's important for this model as we can use the time and location variables of the meteorite landings to find patterns by clustering these landings based on their location and time and categorize them as metoerite hotspots. This gives us the following scattar plot:
 ![](https://github.com/eduardolopez858/Meteorite-Hotspots/blob/main/Model1.2.png) 

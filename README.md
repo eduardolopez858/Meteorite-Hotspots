@@ -4,7 +4,7 @@
 My agent's performance measure is inference on meteorite landings on a given location for the purpose of research and worldwide safety prediction by modeling how frequent these meteorites will fall and be considered dangerous based on a historical dataset. My agent will have an observable environment of planet earth, given geographical locations, a timeline, the masses of the meteorites, and more. My agent's actuators will be a predictive outcome on a meteorite landing based on the given evidence(clustered data, city location, etc.) and an inference classification on the danger level of such meteorite, all which can be modeled in a probabilistic way using a general pipeline of methods. Lastly, my agent will have sensors of gps (world map), time collection, and meteorite mass measurement.
 
 ## My agent's setup
-Using the chosen dataset, the main features my model will be utilizing is mass, location, and a timeline of the metoerite landings since it's purpose is to predict the likelyhood of a meteorite landing on a given location, as well as additionally infering it's danger level given it's frequencies and mass. 
+Using the chosen dataset, the main features my model will be utilizing is mass, location, and a timeline of the metoerite landings since it's purpose is to predict the likelyhood of a meteorite landing on a given location. Also, additionally infering it's danger level given it's frequencies and mass. 
 
 Here's the pipeline of methods in which the agent is structured by:
 ![](pipeline2.png)
